@@ -1,3 +1,4 @@
+pip >= 23
 clearml
 spconv-cu113
 munch
@@ -10,4 +11,4 @@ six
 tensorboard
 tensorboardX
 tqdm
--e .
+.
