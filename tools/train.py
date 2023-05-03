@@ -1,4 +1,5 @@
 import argparse
+import clearml
 import datetime
 import os
 import os.path as osp
@@ -203,4 +204,9 @@ def main():
 
 
 if __name__ == '__main__':
+    from clearml import Task
+    Task.force_requirements_env_freeze(requirements_file="requirements.txt")
+    task = Task.init(project_name='Softgroup', task_name='test')
+    task.set_base_docker(docker_image="pytorch/pytorch:1.12.1-cuda11.3-cudnn8-devel",
+                         docker_setup_bash_script=["apt-get update  && apt-get install -y git ninja-build libsparsehash-dev xvfb"])
     main()

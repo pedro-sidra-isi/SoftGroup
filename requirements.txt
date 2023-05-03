@@ -1,3 +1,5 @@
+clearml
+spconv-cu113
 munch
 pandas
 plyfile
@@ -8,3 +10,4 @@ six
 tensorboard
 tensorboardX
 tqdm
+-e .

@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 from torch.utils.cpp_extension import BuildExtension, CUDAExtension
 
@@ -9,7 +9,7 @@ if __name__ == '__main__':
         description='SoftGroup: SoftGroup for 3D Instance Segmentation [CVPR 2022]',
         author='Thang Vu',
         author_email='thangvubk@kaist.ac.kr',
-        packages=['softgroup'],
+        packages=find_packages(),
         package_data={'softgroup.ops': ['*/*.so']},
         ext_modules=[
             CUDAExtension(
