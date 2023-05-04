@@ -5,11 +5,11 @@ from torch.utils.cpp_extension import BuildExtension, CUDAExtension
 if __name__ == '__main__':
     setup(
         name='softgroup',
-        version='1.1',
+        version='1.2',
         description='SoftGroup: SoftGroup for 3D Instance Segmentation [CVPR 2022]',
         author='Thang Vu',
         author_email='thangvubk@kaist.ac.kr',
-        packages=find_packages(),
+        packages=find_packages("src"),
         package_dir={'':'src'},
         package_data={'softgroup.ops': ['*/*.so']},
         ext_modules=[
