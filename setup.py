@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
 from torch.utils.cpp_extension import BuildExtension, CUDAExtension
 
@@ -15,8 +15,8 @@ if __name__ == '__main__':
             CUDAExtension(
                 name='softgroup.ops.ops',
                 sources=[
-                    'softgroup/ops/src/softgroup_api.cpp', 'softgroup/ops/src/softgroup_ops.cpp',
-                    'softgroup/ops/src/cuda.cu'
+                    'src/softgroup/ops/src/softgroup_api.cpp', 'src/softgroup/ops/src/softgroup_ops.cpp',
+                    'src/softgroup/ops/src/cuda.cu'
                 ],
                 extra_compile_args={
                     'cxx': ['-g'],
