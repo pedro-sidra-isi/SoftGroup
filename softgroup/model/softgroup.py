@@ -103,22 +103,34 @@ class SoftGroup(nn.Module):
                 if isinstance(m, nn.BatchNorm1d):
                     m.eval()
 
-    def forward(self, batch, return_loss=False):
-        if return_loss:
-            return self.forward_train(**batch)
-        else:
-            return self.forward_test(**batch)
-
     @cuda_cast
-    def forward_train(self, batch_idxs, voxel_coords, p2v_map, v2p_map, coords_float, feats,
+    def set_params(self, batch_idxs, voxel_coords, p2v_map, v2p_map, coords_float, feats,
                       semantic_labels, instance_labels, instance_pointnum, instance_cls,
                       pt_offset_labels, spatial_shape, batch_size, **kwargs):
+        self.voxel_coords=voxel_coords
+        self.batch_size=batch_size
+        self.spatial_shape=spatial_shape
+        self.p2v_map = p2v_map
+        self.v2p_map = v2p_map
+
+    def forward(self, coords_float, feats):
+        # if return_loss:
+        #     return self.forward_train(**batch)
+        # else:
+        #     return self.forward_test(**batch)
+        return self.forward_train(coords_float, feats)
+
+
+    @cuda_cast
+    def forward_train(self, feats, coords_float):
         losses = {}
         if self.with_coords:
             feats = torch.cat((feats, coords_float), 1)
-        voxel_feats = voxelization(feats, p2v_map)
-        input = spconv.SparseConvTensor(voxel_feats, voxel_coords.int(), spatial_shape, batch_size)
-        semantic_scores, pt_offsets, output_feats = self.forward_backbone(input, v2p_map)
+        voxel_feats = voxelization(feats, self.p2v_map)
+        input = spconv.SparseConvTensor(voxel_feats, self.voxel_coords.int(), self.spatial_shape, self.batch_size)
+        semantic_scores, pt_offsets, output_feats = self.forward_backbone(input, self.v2p_map)
+
+        return semantic_scores.softmax(dim=-1)
 
         # point wise losses
         point_wise_loss = self.point_wise_loss(semantic_scores, pt_offsets, semantic_labels,

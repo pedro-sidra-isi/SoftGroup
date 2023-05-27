@@ -35,7 +35,7 @@ model:
 data:
   train:
     type: 's3dis'
-    data_root: 'dataset/s3dis/preprocess'
+    data_root: 'dataset/s3dis/preprocess_sample'
     prefix: ['Area_1', 'Area_2', 'Area_3', 'Area_4', 'Area_6']
     suffix: '_inst_nostuff.pth'
     repeat: 5
@@ -47,7 +47,7 @@ data:
       min_npoint: 5000
   test:
     type: 's3dis'
-    data_root: 'dataset/s3dis/preprocess'
+    data_root: 'dataset/s3dis/preprocess_sample'
     prefix: 'Area_5'
     suffix: '_inst_nostuff.pth'
     training: False

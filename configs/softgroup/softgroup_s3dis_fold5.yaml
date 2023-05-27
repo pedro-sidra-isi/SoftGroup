@@ -44,7 +44,7 @@ data:
     x4_split: True
   test:
     type: 's3dis'
-    data_root: 'dataset/s3dis/preprocess'
+    data_root: 'dataset/s3dis/preprocess_sample'
     prefix: 'Area_5'
     suffix: '_inst_nostuff.pth'
     training: False
